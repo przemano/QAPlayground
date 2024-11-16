@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import config.Config;
 import pages.DynamicTablePage;
@@ -102,5 +104,41 @@ class QAPlaygroundTest extends BaseTest {
 
 	}
 
-	
+	@DisplayName("Navigate into the sub-menus and assert menu items text and link")
+	@ParameterizedTest(name = "#{index} Menu item {0} / {1} link to {2}")
+	@CsvSource({
+		"My Profile,,#undefined",
+		"Settings,,#settings",
+		"Settings,My Tutorial,#main",
+		"Settings,HTML,#!HTML",
+		"Settings,CSS,#!CSS",
+		"Settings,JavaScript,#!JavaScript",
+		"Settings,Awesome!,#!Awesome",
+		"Animals,,#Animals",
+		"Animals,Animals,#main",
+		"Animals,Kangaroo,#!Kangaroo",
+		"Animals,Frog,#!Frog",
+		"Animals,Horse,#!Horse",
+		"Animals,Hedgehog,#!Hedgehog"}) 
+	void multiLevelDropdown(String menu1stLevel, String menu2ndLevel, String linkURL)
+	{
+		
+		
+		new HomePage(driver).goTo(MultiLevelDropdown.URL);
+
+
+
+		MultiLevelDropdown mld = new MultiLevelDropdown(driver);
+		mld
+		.open1stLevelMenu(menu1stLevel)
+		.open2ndLevelMenu(menu2ndLevel)
+		.takeURL();
+		
+		
+
+
+		assertEquals(linkURL, mld.takeURL(), MultiLevelDropdown.AssertMsg_DiscrepancyLinkURL);
+
+	}
+
 }
