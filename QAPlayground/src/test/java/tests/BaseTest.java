@@ -1,6 +1,6 @@
 package tests;
 
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -26,8 +26,8 @@ public class BaseTest {
 		options.addArguments("--disable-search-engine-choice-screen");
 		options.addArguments("--start-maximized");
 		options.addArguments("--disable-gpu");
-
 		driver = new ChromeDriver(options);
+		
 	}
 	
 	@BeforeEach
@@ -36,9 +36,15 @@ public class BaseTest {
 		new HomePage(driver).open();
 	}
 
-	@AfterEach
-	public void Close()
-	{
-		driver.quit();
-	}
+//	@AfterEach
+//	public void Close()
+//	{
+//		driver.quit();
+//	}
+	
+//	@AfterAll
+//	public void Close()
+//	{
+//		driver.quit();
+//	}
 }
