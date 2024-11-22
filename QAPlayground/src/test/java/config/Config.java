@@ -13,6 +13,7 @@ public class Config {
 
 
 
+
 	public class DynamicTable {
 		/**Searched superhero*/
 		public static final String UserSuperHero = "Spider-Man";
@@ -41,9 +42,15 @@ public class Config {
 	
 	public class NewTab
 	{
-		/** Tags to add in the test */
+		/** Label on second tab */
 		public static final String NewTabLabel = "Welcome to the new page!";
 
-		
 	}
+	
+	public class PopUpWindow 
+	{
+		/** Label after 'Submit' button click */
+		public static final String ButtonClickedLabel = "Button Clicked";
+	}
+	
 }

@@ -15,6 +15,7 @@ import pages.DynamicTablePage;
 import pages.HomePage;
 import pages.MultiLevelDropdownPage;
 import pages.NewTabPage;
+import pages.PopUpWindowPage;
 import pages.TagsInputBoxPage;
 import pages.VerifyAccountPage;
 @DisplayName("QA Playground with Selenium 4")
@@ -157,4 +158,28 @@ class QAPlaygroundTest extends BaseTest {
 
 	}
 
+	@DisplayName("Pop-Up Window - Open pop-up and click on the button in it and assert text on the main window")
+	@Test
+	void PopUpWindowTest()
+	{
+		new HomePage(driver).goTo(PopUpWindowPage.URL);
+
+		PopUpWindowPage puw = new PopUpWindowPage(driver);
+		
+		puw
+		.clickButtonOpen()
+		.switchToPopup()
+		.clickSubmitInPopupAndClosePopup()
+		.switchToMainPage();
+		
+
+		String buttonClickedLabel  = puw.takeButtonClickedLabel();
+		 
+
+		assertEquals(Config.PopUpWindow.ButtonClickedLabel, buttonClickedLabel, PopUpWindowPage.AssertMsg_DiscrepancyLabel);
+
+	}
+
+
+	
 }
