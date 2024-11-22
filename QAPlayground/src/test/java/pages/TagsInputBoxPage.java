@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TagsInputBox extends Page {
+public class TagsInputBoxPage extends Page {
 
 	public static final String URL = "/apps/tags-input-box/";
 	public static final String AssertMsg_DiscrepancyTagsNumber = "Discrepancy in the number of tags";
@@ -29,12 +29,12 @@ public class TagsInputBox extends Page {
 	private WebElement RemoveAllButton;
 			
 	
-	public TagsInputBox(WebDriver driver) {
+	public TagsInputBoxPage(WebDriver driver) {
 		super(driver);
 		this.url = URL;
 	}
 
-	public TagsInputBox addTag(String tag) {
+	public TagsInputBoxPage addTag(String tag) {
 		TagsInputField.sendKeys(tag);
 		TagsInputField.sendKeys(Keys.ENTER);
 		return this;
@@ -44,7 +44,7 @@ public class TagsInputBox extends Page {
 		return TagList.get(TagList.size()-1).getText();
 	}
 
-	public TagsInputBox removeLastTag() {
+	public TagsInputBoxPage removeLastTag() {
 		TagList.get(TagList.size()-1).findElement(By.xpath(XPATH_REMOVEICON)).click();
 		return this;
 	}
@@ -53,7 +53,7 @@ public class TagsInputBox extends Page {
 		return Integer.valueOf(RemainingTagsNo.getText());
 	}
 
-	public TagsInputBox removeAll() {
+	public TagsInputBoxPage removeAll() {
 		RemoveAllButton.click();
 		return this;
 		

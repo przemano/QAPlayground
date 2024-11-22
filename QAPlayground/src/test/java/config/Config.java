@@ -1,6 +1,7 @@
 package config;
 
 import java.util.List;
+import java.util.Set;
 
 public class Config {
 	/** Default home page of the tested website. Can be overwritten with variables from CI/CD tools */
@@ -35,6 +36,14 @@ public class Config {
 		public static final int InitTagsNo = 2;
 		/** The maximum number of tags that can be added*/
 		public static final int MaxTagsNo = 10;
+		
+	}
+	
+	public class NewTab
+	{
+		/** Tags to add in the test */
+		public static final String NewTabLabel = "Welcome to the new page!";
+
 		
 	}
 }
