@@ -1,6 +1,7 @@
 package tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.IntStream;
 
@@ -14,8 +15,10 @@ import config.Config;
 import pages.DynamicTablePage;
 import pages.HomePage;
 import pages.MultiLevelDropdownPage;
+import pages.NestedIframePage;
 import pages.NewTabPage;
 import pages.PopUpWindowPage;
+import pages.SortableListPage;
 import pages.TagsInputBoxPage;
 import pages.VerifyAccountPage;
 @DisplayName("QA Playground with Selenium 4")
@@ -107,7 +110,7 @@ class QAPlaygroundTest extends BaseTest {
 
 	}
 
-	@DisplayName("Navigate into the sub-menus and assert menu items text and link")
+	@DisplayName("Multi Level Dropdown - Navigate into the sub-menus and assert menu items text and link")
 	@ParameterizedTest(name = "#{index} Menu item {0} / {1} link to {2}")
 	@CsvSource({
 		"My Profile, ,#undefined",
@@ -179,7 +182,46 @@ class QAPlaygroundTest extends BaseTest {
 		assertEquals(Config.PopUpWindow.ButtonClickedLabel, buttonClickedLabel, PopUpWindowPage.AssertMsg_DiscrepancyLabel);
 
 	}
+	@DisplayName("Sortable List - Drag and drop list items to make the correct order and then click on the button and assert that all have green text")
+	@Test
+//	@ParameterizedTest(name = "#{index} Drag and drop '{1}' on place {0}")
+//	@CsvSource({
+//		"1,Jeff Bezos",
+//		"2,Bill Gates",
+//		"3,Warren Buffett",
+//		"4,Bernard Arnault",
+//		"5,Carlos Slim Helu",
+//		"6,Amancio Ortega",
+//		"7,Larry Ellison",
+//		"8,Mark Zuckerberg",
+//		"9,Michael Bloomberg",
+//		"10,Larry Page"
+//		}) 
+	void multiLevelDropdownTest()//int place, String person)
+	{
+		new HomePage(driver).goTo(SortableListPage.URL);
+		
+		SortableListPage sl = 
+			new SortableListPage(driver)
+			.dragAndDropAllPersons(Config.SortableList.RichestPeopleList)
+			.checkOrder();
+		
 
+		assertTrue(sl.areAllPersonsGreen());
+	}
 
+	@DisplayName("Nested Iframe - Click on the button in the iframe that is in another iframe and assert a success message")
+	@Test
+	void nestedIframeTest()
+	{
+		new HomePage(driver).goTo(NestedIframePage.URL);
+		
+		String buttonClickedLabel = 
+		new NestedIframePage(driver)
+		.clickClickMeButton()
+		.takeButtonClickedLabel();
+		
+		assertEquals(Config.NestedIframe.ButtonClickedLabel, buttonClickedLabel);
+	}
 	
 }

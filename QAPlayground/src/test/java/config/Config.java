@@ -1,6 +1,7 @@
 package config;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Config {
@@ -10,6 +11,7 @@ public class Config {
 	public static final String BaseURL = System.getenv("BASE_URL") == null ? Config.BaseUrlDefault : System.getenv("BASE_URL");
 	/** Timeout in seconds - page loading time and other actions for the wait object of the WebDriverWait class*/
 	public static final long Timeout = 3;
+
 
 
 
@@ -50,6 +52,26 @@ public class Config {
 	public class PopUpWindow 
 	{
 		/** Label after 'Submit' button click */
+		public static final String ButtonClickedLabel = "Button Clicked";
+	}
+	
+	public class SortableList
+	{
+		public static final Map<Integer, String> RichestPeopleList = Map.of(
+				1,"Jeff Bezos",
+				2,"Bill Gates",
+				3,"Warren Buffett",
+				4,"Bernard Arnault",
+				5,"Carlos Slim Helu",
+				6,"Amancio Ortega",
+				7,"Larry Ellison",
+				8,"Mark Zuckerberg",
+				9,"Michael Bloomberg",
+				10,"Larry Page");	
+	}
+	
+	public class NestedIframe
+	{
 		public static final String ButtonClickedLabel = "Button Clicked";
 	}
 	
