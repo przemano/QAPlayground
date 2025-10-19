@@ -3,14 +3,17 @@
   <groupId>com.github.przemano</groupId>
   <artifactId>QAPlayground</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
+
+	<properties>
+		<maven.compiler.release>21</maven.compiler.release>
+	</properties>
   <dependencies>
-  	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-	<dependency>
-	    <groupId>org.seleniumhq.selenium</groupId>
-	    <artifactId>selenium-java</artifactId>
-	    <version>4.26.0</version>
-	</dependency>
+	  <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+	  <dependency>
+		  <groupId>org.seleniumhq.selenium</groupId>
+		  <artifactId>selenium-java</artifactId>
+		  <version>4.37.0</version>
+	  </dependency>
 
 	<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 	<dependency>
@@ -19,7 +22,7 @@
 	    <version>5.11.3</version>
 	    <scope>test</scope>
 	</dependency>
-	
+
 	<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
 	<dependency>
 	    <groupId>org.junit.jupiter</groupId>
@@ -28,6 +31,12 @@
 	    <scope>test</scope>
 	</dependency>
 
+	  <dependency>
+		  <groupId>org.junit.jupiter</groupId>
+		  <artifactId>junit-jupiter-engine</artifactId>
+		  <version>5.11.3</version>
+		  <scope>test</scope>
+	  </dependency>
 
   </dependencies>
 </project>
