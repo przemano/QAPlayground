@@ -3,6 +3,7 @@ package config;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class Config {
 	/** Default home page of the tested website. Can be overwritten with variables from CI/CD tools */
@@ -57,7 +58,7 @@ public class Config {
 	
 	public class SortableList
 	{
-		public static final Map<Integer, String> RichestPeopleList = Map.of(
+		public static final Map<Integer, String> RichestPeopleList = new TreeMap<>(Map.of(
 				1,"Jeff Bezos",
 				2,"Bill Gates",
 				3,"Warren Buffett",
@@ -67,7 +68,8 @@ public class Config {
 				7,"Larry Ellison",
 				8,"Mark Zuckerberg",
 				9,"Michael Bloomberg",
-				10,"Larry Page");	
+				10,"Larry Page")
+		);
 	}
 	
 	public class NestedIframe

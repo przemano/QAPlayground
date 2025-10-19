@@ -93,7 +93,13 @@ public class SortableListPage extends Page {
 		new Actions(driver)
 			.dragAndDrop(takePersonDraggableArea(currentPlaceIndex), takePersonDraggableArea(placeIndex))
 			.perform();
-	}
+
+		try { //FIXME - replace Thread.sleep with wait.until
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	public String takePersonOrderStatus(int placeIndex) {
 		
