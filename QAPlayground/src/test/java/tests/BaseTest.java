@@ -42,9 +42,9 @@ public class BaseTest {
 //		driver.quit();
 //	}
 	
-//	@AfterAll
-//	public void Close()
-//	{
-//		driver.quit();
-//	}
+	@AfterAll
+	public static void close()
+	{
+		driver.quit();
+	}
 }
