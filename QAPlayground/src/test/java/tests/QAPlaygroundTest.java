@@ -12,15 +12,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import config.Config;
-import pages.DynamicTablePage;
-import pages.HomePage;
-import pages.MultiLevelDropdownPage;
-import pages.NestedIframePage;
-import pages.NewTabPage;
-import pages.PopUpWindowPage;
-import pages.SortableListPage;
-import pages.TagsInputBoxPage;
-import pages.VerifyAccountPage;
+import pages.*;
+
 @DisplayName("QA Playground with Selenium 4")
 class QAPlaygroundTest extends BaseTest {
 	
@@ -174,41 +167,31 @@ class QAPlaygroundTest extends BaseTest {
 		.switchToPopup()
 		.clickSubmitInPopupAndClosePopup()
 		.switchToMainPage();
-		
 
 		String buttonClickedLabel  = puw.takeButtonClickedLabel();
-		 
 
 		assertEquals(Config.PopUpWindow.ButtonClickedLabel, buttonClickedLabel, PopUpWindowPage.AssertMsg_DiscrepancyLabel);
 
 	}
-	@DisplayName("Sortable List - Drag and drop list items to make the correct order and then click on the button and assert that all have green text")
+	@DisplayName("Shadow DOM - Click on the button and assert that progress is on the 95 percent")
 	@Test
-//	@ParameterizedTest(name = "#{index} Drag and drop '{1}' on place {0}")
-//	@CsvSource({
-//		"1,Jeff Bezos",
-//		"2,Bill Gates",
-//		"3,Warren Buffett",
-//		"4,Bernard Arnault",
-//		"5,Carlos Slim Helu",
-//		"6,Amancio Ortega",
-//		"7,Larry Ellison",
-//		"8,Mark Zuckerberg",
-//		"9,Michael Bloomberg",
-//		"10,Larry Page"
-//		}) 
-	void multiLevelDropdownTest()//int place, String person)
+
+	void shadowDOMPage_Test()//int place, String person)
 	{
-		new HomePage(driver).goTo(SortableListPage.URL);
+		new HomePage(driver).goTo(ShadowDOMPage.URL);
 		
-		SortableListPage sl = 
-			new SortableListPage(driver)
-			.dragAndDropAllPersons(Config.SortableList.RichestPeopleList)
-			.checkOrder();
+		String progressbarValue =
+			new ShadowDOMPage(driver)
+			.clickBoost()
+			.waitForProgressbarValue(Config.ShadowDOM.progressbarValue)
+			.takeProgressbarValue();
+
 		
 
-		assertTrue(sl.areAllPersonsGreen());
+		assertEquals(Config.ShadowDOM.progressbarValue, progressbarValue);
 	}
+
+
 
 	@DisplayName("Nested Iframe - Click on the button in the iframe that is in another iframe and assert a success message")
 	@Test

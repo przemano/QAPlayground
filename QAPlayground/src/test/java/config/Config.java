@@ -2,7 +2,6 @@ package config;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class Config {
@@ -76,5 +75,9 @@ public class Config {
 	{
 		public static final String ButtonClickedLabel = "Button Clicked";
 	}
-	
+
+	public class ShadowDOM
+	{
+		public static final String progressbarValue = "95";
+	}
 }
