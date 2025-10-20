@@ -1,58 +1,65 @@
 package pages;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import config.Config;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class DynamicTablePage extends Page {
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Optional;
 
-	
-	public static final String URL = "/apps/dynamic-table/";
-	
-	private static final String XPATH_SUPERHERO = ".//*[contains(@class,'ml-4')]//*[1]"; //".//*[contains(@class,'ml-4')]//*[contains(@class,'text-white-900')]";
-	private static final String XPATH_EMAIL = ".//*[contains(@class,'ml-4')]//*[2]"; //".//*[contains(@class,'ml-4')]//*[contains(@class,'text-gray-500')]";
-	private static final String XPATH_ICON = ".//img";
-	private static final String XPATH_STATUS = ".//td[2]/span";
-	private static final String XPATH_REALNAME = ".//td[3]/span";
-	
-	
-	@FindBy(xpath = "//*[@id='tbody']/tr")
-	private List<WebElement> TableRowList;
-	
-	public DynamicTablePage(WebDriver driver) {
+public class StarsRatingWidgetPage extends Page {
+
+
+	public static final String URL = "/apps/rating/";
+
+	@FindBy(xpath = "//*[contains(@class, 'stars')]//label")
+	private List<WebElement> StarsButtonList;
+	@FindBy(xpath = "//*[contains(@class, 'footer')]//*[contains(@class, 'text')]")
+	private WebElement DescriptionLabel;
+	@FindBy(xpath = "//*[contains(@class, 'footer')]//*[contains(@class, 'numb')]")
+	private WebElement NumberLabel;
+	@FindBy(xpath = "//*[contains(@class, 'emojis')]//img")
+	private List<WebElement> ImageList;
+
+	public StarsRatingWidgetPage(WebDriver driver) {
 		super(driver);
 		this.url = URL;
 	}
 
-	public String takeRealNameOfUser(String usersuperhero) {
-		waitForTableData();
-		WebElement userRow = findUserRow(usersuperhero);
-		return takeUserRealName(userRow);
-		
+
+	public StarsRatingWidgetPage clickStars(int stars) {
+		StarsButtonList.stream()
+				.filter(label -> Integer.valueOf(label.getAttribute("for").replace("star-", "")) == stars)
+				.findFirst()
+				.orElseThrow(() ->  new NoSuchElementException("No element with value :" + stars))
+				.click();
+
+	return this;
 	}
 
-	private String takeUserRealName(WebElement userRow) {
-		return userRow.findElement(By.xpath(XPATH_REALNAME)).getText();
-		
+	public String takeDescription() {
+		return getBeforeContent(DescriptionLabel);
 	}
 
-	private void waitForTableData()
-	{
-		wait.until(ExpectedConditions.visibilityOfAllElements(TableRowList));
+	private String getBeforeContent(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		String script = "return window.getComputedStyle(arguments[0], '::before').getPropertyValue('content')";
+		return ((String) Objects.requireNonNull(js.executeScript(script, element))).replace("\"", "");
 	}
 
-	private WebElement findUserRow(String usersuperhero)
-	{
-		return
-			TableRowList.stream()
-			.filter(row -> row.findElement(By.xpath(XPATH_SUPERHERO)).getText().equals(usersuperhero))
+	public int takeNumber() {
+		return Integer.parseInt(getBeforeContent(NumberLabel).replace(Config.StarsRatingWidget.NumberLabelSuffix, ""));
+	}
+
+	public String takeImage() {
+		return ImageList
+			.stream()
+			.filter(WebElement::isDisplayed)
+			.map(img ->  Optional.ofNullable(img.getAttribute("src")).orElse(""))
 			.findFirst()
-			.orElseThrow(() -> new NotFoundException("Table row for superhero user: '" + usersuperhero + "' not found on list."));
+			.orElseThrow(() -> new NoSuchElementException("There is no image displayed."));
 	}
-	
 }

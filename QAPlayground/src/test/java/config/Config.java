@@ -80,4 +80,11 @@ public class Config {
 	{
 		public static final String progressbarValue = "95";
 	}
+
+	public class StarsRatingWidget
+	{
+		public static final String NumberLabelSuffix = " out of 5";
+
+
+	}
 }

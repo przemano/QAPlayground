@@ -173,25 +173,6 @@ class QAPlaygroundTest extends BaseTest {
 		assertEquals(Config.PopUpWindow.ButtonClickedLabel, buttonClickedLabel, PopUpWindowPage.AssertMsg_DiscrepancyLabel);
 
 	}
-	@DisplayName("Shadow DOM - Click on the button and assert that progress is on the 95 percent")
-	@Test
-
-	void shadowDOMPage_Test()//int place, String person)
-	{
-		new HomePage(driver).goTo(ShadowDOMPage.URL);
-		
-		String progressbarValue =
-			new ShadowDOMPage(driver)
-			.clickBoost()
-			.waitForProgressbarValue(Config.ShadowDOM.progressbarValue)
-			.takeProgressbarValue();
-
-		
-
-		assertEquals(Config.ShadowDOM.progressbarValue, progressbarValue);
-	}
-
-
 
 	@DisplayName("Nested Iframe - Click on the button in the iframe that is in another iframe and assert a success message")
 	@Test
@@ -206,5 +187,49 @@ class QAPlaygroundTest extends BaseTest {
 		
 		assertEquals(Config.NestedIframe.ButtonClickedLabel, buttonClickedLabel);
 	}
-	
+
+	@DisplayName("Shadow DOM - Click on the button and assert that progress is on the 95 percent")
+	@Test
+	void shadowDOMPage_Test()//int place, String person)
+	{
+		new HomePage(driver).goTo(ShadowDOMPage.URL);
+
+		String progressbarValue =
+				new ShadowDOMPage(driver)
+						.clickBoost()
+						.waitForProgressbarValue(Config.ShadowDOM.progressbarValue)
+						.takeProgressbarValue();
+
+
+
+		assertEquals(Config.ShadowDOM.progressbarValue, progressbarValue);
+	}
+
+	@DisplayName("Stars Rating Widget - Set each available rate value and assert by image, text, and number")
+	@ParameterizedTest(name = "stars: {0} - {1} | {2} ")
+	@CsvSource({
+			"1, I just hate it, emojis/emoji-1.png",
+			"2, I don't like it, emojis/emoji-2.png",
+			"3, This is awesome, emojis/emoji-3.png",
+			"4, I just like it, emojis/emoji-4.png",
+			"5, I just love it, emojis/emoji-5.png",
+	})
+	void startsRatingWidget_Test(int stars, String description, String image)
+	{
+		//System.out.println("a");
+		new HomePage(driver).goTo(StarsRatingWidgetPage.URL);
+
+		StarsRatingWidgetPage srw = new StarsRatingWidgetPage(driver);
+		srw.clickStars(stars);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+		Assertions.assertEquals(description, srw.takeDescription() );
+		Assertions.assertEquals(stars, srw.takeNumber() );
+		Assertions.assertTrue(srw.takeImage().endsWith(image) );
+
+	}
 }
