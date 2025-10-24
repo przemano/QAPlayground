@@ -220,7 +220,7 @@ class QAPlaygroundTest extends BaseTest {
 		new HomePage(driver).goTo(StarsRatingWidgetPage.URL);
 
 		StarsRatingWidgetPage srw = new StarsRatingWidgetPage(driver);
-		srw.clickStars(stars);
+		srw.clickStars(stars); //FIXME Try to avoid Thread.sleep
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
@@ -231,5 +231,15 @@ class QAPlaygroundTest extends BaseTest {
 		Assertions.assertEquals(stars, srw.takeNumber() );
 		Assertions.assertTrue(srw.takeImage().endsWith(image) );
 
+	}
+
+	@DisplayName("Covered Elements - Click on the hidden button and assert hidden message")
+	@Test
+	void coveredElements_Test()
+	{
+		new HomePage(driver).goTo(CoveredElementsPage.URL);
+		CoveredElementsPage ce = new CoveredElementsPage(driver);
+		String label = ce.clickButton().readLabel();
+		Assertions.assertEquals(CoveredElementsPage.EXPECTED_LABEL, label);
 	}
 }
