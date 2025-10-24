@@ -26,13 +26,13 @@ public class StarsRatingWidgetPage extends Page {
 
 	public StarsRatingWidgetPage(WebDriver driver) {
 		super(driver);
-		this.url = URL;
+        this.url = URL;
 	}
 
 
 	public StarsRatingWidgetPage clickStars(int stars) {
 		StarsButtonList.stream()
-				.filter(label -> Integer.valueOf(label.getAttribute("for").replace("star-", "")) == stars)
+				.filter(label -> Integer.parseInt(label.getAttribute("for").replace("star-", "")) == stars)
 				.findFirst()
 				.orElseThrow(() ->  new NoSuchElementException("No element with value :" + stars))
 				.click();
