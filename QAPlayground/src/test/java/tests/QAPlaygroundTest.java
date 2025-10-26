@@ -242,4 +242,15 @@ class QAPlaygroundTest extends BaseTest {
 		String label = ce.clickButton().readLabel();
 		Assertions.assertEquals(CoveredElementsPage.EXPECTED_LABEL, label);
 	}
+
+	@DisplayName("UploadFile - Upload an image file and assert the file's name")
+	@Test
+	void uploadFile_Test()
+	{
+		var imageName = "TG.jpg";
+		new HomePage(driver).goTo(UploadFilePage.URL);
+		UploadFilePage uf = new UploadFilePage(driver);
+		String fileNameLabel = uf.selectAndUploadImage(imageName).takeFileName();
+		Assertions.assertEquals(imageName, fileNameLabel);
+	}
 }
