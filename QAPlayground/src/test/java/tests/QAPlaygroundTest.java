@@ -243,7 +243,7 @@ class QAPlaygroundTest extends BaseTest {
 		Assertions.assertEquals(CoveredElementsPage.EXPECTED_LABEL, label);
 	}
 
-	@DisplayName("UploadFile - Upload an image file and assert the file's name")
+	@DisplayName("Upload File - Upload an image file and assert the file's name")
 	@Test
 	void uploadFile_Test()
 	{
@@ -252,5 +252,32 @@ class QAPlaygroundTest extends BaseTest {
 		UploadFilePage uf = new UploadFilePage(driver);
 		String fileNameLabel = uf.selectAndUploadImage(imageName).takeFileName();
 		Assertions.assertEquals(imageName, fileNameLabel);
+	}
+
+	@DisplayName("Download File - Download a file and assert the file's name and size")
+	@Test
+	void downloadFile_Test()
+	{
+		var imageName = "TG.jpg";
+		new HomePage(driver).goTo(DownloadFilePage.URL);
+		DownloadFilePage df = new DownloadFilePage(driver);
+		//String fileNameLabel = uf.selectAndUploadImage(imageName).takeFileName();
+		df.downloadFile(); //TODO not finished
+		//Assertions.assertEquals(imageName, fileNameLabel);
+	}
+
+	@DisplayName("Onboarding Modal Popup - Close the modal popup if displayed and assert the message")
+	@Test
+	void onboardingModalPopup_Test()
+	{
+		new HomePage(driver).goTo(OnboardingModalPopupPage.URL);
+		OnboardingModalPopupPage omp = new OnboardingModalPopupPage(driver);
+		String expectedMessage = OnboardingModalPopupPage.MessageWnenNoDisplayed;
+		if(omp.isModalOpen())
+		{
+			omp.closeModal();
+			expectedMessage = OnboardingModalPopupPage.MessageWnenModalDisplayed;
+		}
+		Assertions.assertEquals(expectedMessage, omp.takeMessage());
 	}
 }
